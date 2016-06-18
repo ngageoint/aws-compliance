@@ -6,7 +6,7 @@ CHECK=( [hostname]=".ec2.internal" )
 
 for I in "${!CHECK[@]}"
 do
-    curl -s $url/$I/ | grep -q ${CHECK[$I]} && echo "Oh no you di'int: $I of value ${CHECK[$I]} not permitted. Shutting off. Redeploy with corrected value using procedures found here: <wiki link here>"
+    curl -s $url/$I/ | grep -q ${CHECK[$I]} && echo "Oh no you di'int: $I of value ${CHECK[$I]} not permitted. Shutting off. Redeploy with corrected value using procedures found here: <wiki link here>" #&& sudo poweroff
 done
 #for I in "${!CHECK[@]}";do echo $I ${CHECK[$I]}; done
 #curl -s http://169.254.169.254/1.0/meta-data/hostname/ | grep -q ec2.internal && echo "shutting down"
