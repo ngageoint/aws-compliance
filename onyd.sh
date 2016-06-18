@@ -15,7 +15,7 @@ for I in "${!CHECK[@]}"
 do
     for J in $(echo "${CHECK[$I]}" | sed "s/,/ /g")
     do
-        curl -s $url/$I/ | grep -q ${CHECK[$I]} || shutheroff
+        curl -s $url/$I/ | grep -q $J || shutheroff
     done
     #curl -s $url/$I/ | grep -q ${CHECK[$I]} ||  echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
     #curl -s $url/$I/ | grep -q ${CHECK[$I]} && echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
