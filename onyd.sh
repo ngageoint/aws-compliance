@@ -8,7 +8,7 @@ CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass")
 
 for I in "${!CHECK[@]}"
 do
-    curl -s $url/$I/ | grep -q ${CHECK[$I]} && echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
+    curl -s $url/$I/ | grep -q ${CHECK[$I]} ||  echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
+    #curl -s $url/$I/ | grep -q ${CHECK[$I]} && echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
 done
-#for I in "${!CHECK[@]}";do echo $I ${CHECK[$I]}; done
 #curl -s http://169.254.169.254/1.0/meta-data/hostname/ | grep -q ec2.internal && echo "shutting down"
