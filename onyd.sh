@@ -6,15 +6,21 @@ declare -A CHECK
 #                   desired domain                desired key
 CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test" )
 
+function shutheroff {
+   logger "      Error: $I of value $J not permitted. $message"
+   echo "sudo poweroff"
+}
+function main {
 for I in "${!CHECK[@]}"
 do
     for J in $(echo "${CHECK[$I]}" | sed "s/,/ /g")
     do
-        echo "      Error: $I of value $J not permitted." &&\
-        echo "             $message" &&\
-        logger "Error: $I of value $J not permitted." $message #&& sudo poweroff
+        curl -s $url/$I/ | grep -q ${CHECK[$I]} || shutheroff
     done
     #curl -s $url/$I/ | grep -q ${CHECK[$I]} ||  echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
     #curl -s $url/$I/ | grep -q ${CHECK[$I]} && echo "Error: $I of value ${CHECK[$I]} not permitted. $message" #&& sudo poweroff
 done
 #curl -s http://169.254.169.254/1.0/meta-data/hostname/ | grep -q ec2.internal && echo "shutting down"
+}
+
+main
