@@ -7,7 +7,7 @@ declare -A CHECK
 CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test" )
 
 function shutheroff {
-   logger "      Error: $I of value $J not permitted. $message"
+   logger "      Error: $I of value \"$J\" not found on this instance. $message"
    echo "sudo poweroff"
 }
 function main {
