@@ -11,6 +11,8 @@ Then place this script under /var/lib/cloud/scripts/per-boot and ensure executab
 
 `sudo chmod +x /var/lib/cloud/scripts/per-boot/onyd.sh`
 
+For email notifications to work, ensure the mail package is installed by running the command `sudo yum install mailx` on the instance before making it an AMI.
+
 ## How It Works
 
 Upon creation of a new instance off the AMI, the cron runs this script that looks at AWS's meta data url (http://169.254.169.254/1.0/meta-data/) to check if the instance was launched with orginization settings. If the required values are not found, the instance is powered off leaving those with power to create instances in AWS wondering why their machine keeps shutting off. Eventually, they will learn to keep the machine from shutting down they need to follow the compliance process.
