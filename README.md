@@ -2,8 +2,10 @@
 
 To enforce standards on your AWS instances, put this script in a cron of your AMI like below.
 
-`sudo crontab -e
-@reboot /var/lib/cloud/scripts/per-boot/onyd.sh`
+```
+sudo crontab -e
+@reboot /var/lib/cloud/scripts/per-boot/onyd.sh
+````
 
 Then place this script under /var/lib/cloud/scripts/per-boot and ensure executable.
 
