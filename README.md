@@ -19,3 +19,5 @@ This all happens within the first minute of the instances creation so as to not 
 - appropriate domain name
 - central SSH key
 - list of security groups
+
+The supported orginizational settings checked are stored in a bash associative array. Right now they are set to my Org's values. To tailor to your desires, download the script, crack it open, and modify the values in the array named "CHECK".
