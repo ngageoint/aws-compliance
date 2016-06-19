@@ -8,6 +8,7 @@
 #
 url="http://169.254.169.254/1.0/meta-data"
 message="Oh No You Di'int! :) Shutting off so you can terminate me (and my volumes) and redeploy with corrected values using procedures found here: <wiki link here>"
+email="spam4kev@gmail.com"
 declare -A CHECK
 #build key/value pairs where key is meta-data url endpoint to check if it returns a good value
 #                   desired domain                desired key                  comma seperated list of sg's
@@ -15,7 +16,7 @@ CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="
 
 function notify {
    logger "      Error: $I of value \"$J\" not found on this instance. $message"
-   echo "      Error: $I of value \"$J\" not found on this instance. $message" | mail -s "Powering off your instance: $(hostname)" spam4kev@gmail.com
+   echo "      Error: $I of value \"$J\" not found on this instance. $message" | mail -s "Powering off your instance: $(hostname)" $email
 }
 
 function shutheroff {
