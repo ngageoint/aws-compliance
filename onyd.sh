@@ -10,7 +10,7 @@ url="http://169.254.169.254/1.0/meta-data"
 message="Oh No You Di'int. Shutting off so you can redeploy with corrected value using procedures found here: <wiki link here>"
 declare -A CHECK
 #build key/value pairs where key is meta-data url endpoint to check if it returns a good value
-#                   desired domain                desired key
+#                   desired domain                desired key                  comma seperated list of sg's
 CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test-sg" )
 
 function shutheroff {
