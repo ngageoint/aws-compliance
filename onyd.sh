@@ -7,15 +7,20 @@
 #                         amzn-ami-hvm-2016.03.2.x86_64-gp2 (ami-a4827dc9)
 #
 url="http://169.254.169.254/1.0/meta-data"
-message="Oh No You Di'int. Shutting off so you can redeploy with corrected value using procedures found here: <wiki link here>"
+message="Oh No You Di'int! :) Shutting off so you can terminate me (and my volumes) and redeploy with corrected values using procedures found here: <wiki link here>"
 declare -A CHECK
 #build key/value pairs where key is meta-data url endpoint to check if it returns a good value
 #                   desired domain                desired key                  comma seperated list of sg's
 CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test-sg" )
 
-function shutheroff {
+function notify {
    logger "      Error: $I of value \"$J\" not found on this instance. $message"
-   sudo poweroff
+   echo "      Error: $I of value \"$J\" not found on this instance. $message" | mail -s "Powering off your instance: $(hostname)" spam4kev@gmail.com
+}
+
+function shutheroff {
+   notify
+   #poweroff
 }
 function main {
 for I in "${!CHECK[@]}"
