@@ -9,7 +9,7 @@ message="Oh No You Di'int. Shutting off so you can redeploy with corrected value
 declare -A CHECK
 #build key/value pairs where key is meta-data url endpoint to check if it returns a good value
 #                   desired domain                desired key
-CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test" )
+CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test-sg" )
 
 function shutheroff {
    logger "      Error: $I of value \"$J\" not found on this instance. $message"
