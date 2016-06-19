@@ -20,7 +20,7 @@ function notify {
 
 function shutheroff {
    notify
-   #poweroff
+   [[ "$1" == "noop" ]] && poweroff
 }
 function main {
 for I in "${!CHECK[@]}"
