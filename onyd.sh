@@ -3,7 +3,9 @@
 # To implement, create a root users cron referencing this script in your Org's Linux AMI like below.
 # root cront content: @reboot /var/lib/cloud/scripts/per-boot/onyd.sh
 #
-# 6/19/16: KF
+# 6/19/16: KF tested with RHEL-7.2_HVM_GA-20151112-x86_64-1-Hourly2-GP2 (ami-2051294a) and 
+#                         amzn-ami-hvm-2016.03.2.x86_64-gp2 (ami-a4827dc9)
+#
 url="http://169.254.169.254/1.0/meta-data"
 message="Oh No You Di'int. Shutting off so you can redeploy with corrected value using procedures found here: <wiki link here>"
 declare -A CHECK
