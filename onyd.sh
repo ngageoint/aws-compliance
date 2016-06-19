@@ -8,7 +8,7 @@ CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="
 
 function shutheroff {
    logger "      Error: $I of value \"$J\" not found on this instance. $message"
-   echo "sudo poweroff"
+   #sudo poweroff
 }
 function main {
 for I in "${!CHECK[@]}"
