@@ -18,4 +18,4 @@ Upon creation of a new instance off the AMI, the cron runs this script that look
 This all happens within the first minute of the instances creation so as to not give users enough time grow a dependency on the instance. Here is the list of settings the script looks for:
 - appropriate domain name
 - central SSH key
-- 
+- list of security groups
