@@ -9,6 +9,7 @@
 url="http://169.254.169.254/1.0/meta-data"
 message="Oh No You Di'int! :) Shutting off so you can terminate me (and my volumes) and redeploy with corrected values using procedures found here: <wiki link here>"
 email="spam4kev@gmail.com" #update this to your email address
+arg="$1"
 declare -A CHECK
 #build key/value pairs where key is meta-data url endpoint to check if it returns a good value
 #                   desired domain                desired key                  comma seperated list of sg's
@@ -19,16 +20,16 @@ function notify {
    echo "      Error: onyd.sh mailer - $I of value \"$J\" not found on this instance. $message" | mail -s "Powering off your instance: $(hostname)" $email
 }
 
-function shutheroff {
+function shutheroff () {
    notify
-   [[ "$1" != "noop" ]] && poweroff
+   [[ $arg != "noop" ]] && poweroff
 }
-function main {
+function main () {
 for I in "${!CHECK[@]}"
 do
     for J in $(echo "${CHECK[$I]}" | sed "s/,/ /g")
     do
-        curl -s $url/$I/ | grep -q $J || shutheroff
+        curl -s $url/$I/ | grep -q $J || shutheroff $arg
     done
     #curl -s http://169.254.169.254/1.0/meta-data/hostname/ | grep -q ec2.internal || sudo poweroff"
 done
