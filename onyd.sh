@@ -17,7 +17,8 @@ CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="
 
 function notify {
    logger "      Error: $I of value \"$J\" not found on this instance. $message"
-   echo "      Error: onyd.sh mailer - $I of value \"$J\" not found on this instance. $message" | mail -s "Powering off your instance: $(hostname)" $email
+   metadata=$(curl -s http://169.254.169.254/2016-04-19/dynamic/instance-identity/document/)
+   echo "      Error: onyd.sh mailer - $I of value \"$J\" not found on this instance. $message $metadata" | mail -s "Powering off your instance: $(hostname)" $email
 }
 
 function shutheroff () {
@@ -36,3 +37,6 @@ done
 }
 
 main
+
+#incorp this to add instance id and other details for compliance
+#curl -s http://169.254.169.254/2016-04-19/dynamic/instance-identity/document/
