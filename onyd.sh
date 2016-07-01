@@ -8,16 +8,16 @@
 #
 url="http://169.254.169.254/1.0/meta-data"
 message="Oh No You Di'int! :) Shutting off so you can terminate me (and my volumes) and redeploy with corrected values using procedures found here: <wiki link here>"
-email="spam4kev@gmail.com" #update this to your email address
+email="admin-distro@your.org" #update this to your email address
 arg="$1"
 declare -A CHECK
 #build key/value pairs where key is meta-data url endpoint to check if it returns a good value
 #                   desired domain                desired key                  comma seperated list of sg's
-CHECK=( [hostname]=".ec2.internal" [public-keys]="fitz-pass" [security-groups]="ssh-from-home","test-sg" )
+CHECK=( [hostname]=".ec2.internal" [public-keys]="Org-Admins" [security-groups]="ssh-from-home","sg with whitespace" )
 
 function notify {
    logger "      Error: $I of value \"$J\" not found on this instance. $message"
-   metadata=$(curl -s http://169.254.169.254/2016-04-19/dynamic/instance-identity/document/)
+   metadata=$(curl -s http://169.254.169.254/2014-11-05/dynamic/instance-identity/document/)
    echo "      Error: onyd.sh mailer - $I of value \"$J\" not found on this instance. $message $metadata" | mail -s "Powering off your instance: $(hostname)" $email
 }
 
@@ -26,14 +26,16 @@ function shutheroff () {
    [[ $arg != "noop" ]] && poweroff
 }
 function main () {
-for I in "${!CHECK[@]}"
-do
-    for J in $(echo "${CHECK[$I]}" | sed "s/,/ /g")
+   IFS=","
+   for I in "${!CHECK[@]}"
+   do
+    for J in ${CHECK[$I]}
     do
-        curl -s $url/$I/ | grep -q $J || shutheroff $arg
+      curl -s $url/$I/ | grep -q $J || shutheroff $arg
     done
     #curl -s http://169.254.169.254/1.0/meta-data/hostname/ | grep -q ec2.internal || sudo poweroff"
-done
+   done
+   unset IFS
 }
 
 main
